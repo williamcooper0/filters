@@ -36,6 +36,14 @@ void Pipeline::init(int argc, char **argv)
     }
 }
 
+void Pipeline::clear()
+{
+    for(int i = 0; i < _filters.size(); i++)
+        delete _filters[i];
+
+    delete _tmp;
+}
+
 void Pipeline::draw(const Surface *in, Surface *out)
 {
     const int last = _filters.size() - 1;
@@ -50,10 +58,7 @@ void Pipeline::draw(const Surface *in, Surface *out)
     cout << '\n';
 }
 
-void Pipeline::clear()
+const vector<Filter*> &Pipeline::filters()
 {
-    for(int i = 0; i < _filters.size(); i++)
-        delete _filters[i];
-
-    delete _tmp;
+    return _filters;
 }

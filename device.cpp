@@ -120,8 +120,13 @@ void Device::update()
 {
     read();
     _in->write(GL_RGB, Camera::image()->ptr());
-    _convert->execute(_in, _converted);
-    draw(_converted, _out);
+
+    if(Pipeline::filters().empty())
+        _convert->execute(_in, _out);
+    else {
+        _convert->execute(_in, _converted);
+        draw(_converted, _out);
+    }
 }
 
 Surface *Device::_surface() const
@@ -151,9 +156,19 @@ void Device::loop() const
 {
     for(;;) {
         read();
-        const Surface in(Camera::image());
-        draw(&in, _out);
-        imshow(_windowName, *_out->mat());
+	const Mat *image = Camera::image();
+
+	const Mat *result;
+
+	if(Pipeline::filters().empty())
+	    result = image;
+        else {
+            const Surface in(Camera::image());
+            draw(&in, _out);
+	    result = _out->mat();
+        }
+        
+        imshow(_windowName, *result);
 
         if(!process())
             return;

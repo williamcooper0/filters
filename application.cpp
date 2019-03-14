@@ -20,7 +20,7 @@ Device *Application::_device;
 
 void Application::init(int argc, char **argv)
 {
-    if(argc < 3)
+    if(argc < 2)
         usage();
 
     Camera::init();
@@ -56,7 +56,8 @@ void Application::usage()
         "    g - " + GaussianBlur::name + "\n"
         "    s - " + SobelOperator::name + "\n"
         "\n"
-        "Examples: ./filters gpu s\n"
+        "Examples: ./filters cpu\n"
+        "          ./filters gpu s\n"
         "          ./filters cpu b\n"
         "          ./filters gpu b g s\n"
         "          ./filters cpu g g g g g\n";

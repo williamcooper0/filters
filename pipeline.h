@@ -10,8 +10,10 @@ class Pipeline
 {
 public:
     static void init(int argc, char **argv);
-    static void draw(const Surface *in, Surface *out);
     static void clear();
+    
+    static void draw(const Surface *in, Surface *out);
+    static const std::vector<Filter*> &filters();
 
 private:
     static Surface *_tmp;
