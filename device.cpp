@@ -10,7 +10,7 @@
 #include "filters/sobeloperator.h"
 
 
-#include <opencv2/opencv.hpp>
+#include <opencv2/highgui.hpp>
 
 
 extern "C" {

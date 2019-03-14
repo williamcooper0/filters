@@ -2,7 +2,7 @@
 #define BACKGROUND_SUBTRACTION_H
 
 #include "../filter.h"
-#include <opencv2/opencv.hpp>
+#include <opencv2/video.hpp>
 
 class BackgroundSubtraction : public Filter
 {

@@ -5,7 +5,7 @@
 #include "../surface.h"
 
 
-#include <opencv2/opencv.hpp>
+#include <opencv2/video.hpp>
 
 
 using namespace cv;
