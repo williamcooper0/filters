@@ -63,9 +63,9 @@ Device::Device()
     eglutDisplayFunc(eglutDisplay);
 
 
-    _textureIn = _surface();
+    _in = _surface();
     _converted = _surface();
-    _fboOut = new Surface(width, height, true);
+    _out = new Surface(width, height, true);
 
     Program::init();
     _convert = new Convert;
@@ -76,9 +76,9 @@ Device::~Device()
     delete _convert;
     Program::clear();
 
-    delete _fboOut;
+    delete _out;
     delete _converted;
-    delete _textureIn;
+    delete _in;
 }
 
 void Device::loop() const
@@ -119,12 +119,9 @@ void Device::eglutDisplay()
 void Device::update()
 {
     read();
-
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    _textureIn->write(GL_RGB, Camera::image()->ptr());
-    _convert->execute(_textureIn, _converted);
-
-    draw(_converted, _fboOut);
+    _in->write(GL_RGB, Camera::image()->ptr());
+    _convert->execute(_in, _converted);
+    draw(_converted, _out);
 }
 
 Surface *Device::_surface() const
@@ -140,25 +137,23 @@ namespace _Cpu
 
 Device::Device()
     : _windowName("cpu")
-    , _result(_surface())
+    , _out(_surface())
 {
     namedWindow(_windowName);
 }
 
 Device::~Device()
 {
-    delete _result;
+    delete _out;
 }
 
 void Device::loop() const
 {
     for(;;) {
         read();
-
         const Surface in(Camera::image());
-        draw(&in, _result);
-
-        imshow(_windowName, *_result->mat());
+        draw(&in, _out);
+        imshow(_windowName, *_out->mat());
 
         if(!process())
             return;

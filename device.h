@@ -50,9 +50,9 @@ private:
     static void eglutDisplay();
 
 
-    Surface *_textureIn;
+    Surface *_in;
     Surface *_converted;
-    Surface *_fboOut;
+    Surface *_out;
 
     Convert *_convert;
 
@@ -83,7 +83,7 @@ public:
 
 private:
     const char *_windowName;
-    Surface *_result;
+    Surface *_out;
 
 
     bool process() const;
